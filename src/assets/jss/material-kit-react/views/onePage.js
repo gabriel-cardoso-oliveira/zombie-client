@@ -1,4 +1,5 @@
 import { container } from "assets/jss/material-kit-react.js";
+import modalStyle from "assets/jss/material-kit-react/modalStyle.js";
 
 const signupPageStyle = {
   container: {
@@ -13,6 +14,7 @@ const signupPageStyle = {
     opacity: "0",
     transform: "translate3d(0, -60px, 0)",
   },
+  ...modalStyle,
   pageHeader: {
     minHeight: "100vh",
     height: "auto",

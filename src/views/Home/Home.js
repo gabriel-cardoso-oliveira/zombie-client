@@ -6,6 +6,13 @@ import MUIDataTable, { ExpandButton } from "mui-datatables";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Slide from "@material-ui/core/Slide";
+import Close from "@material-ui/icons/Close";
 import { toast } from "react-toastify";
 // core components
 import Header from "components/Header/Header.js";
@@ -27,10 +34,17 @@ import api from "services/api.js";
 
 const useStyles = makeStyles(styles);
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
+
+Transition.displayName = "Transition";
+
 export default function Home(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   const [survivors, setSurvivors] = useState([]);
-  const [alertSuccess, setAlertSuccess] = useState(false);
+  const [survivor, setSurvivor] = useState([]);
+  const [modal, setModal] = useState(false);
 
   setTimeout(() => {
     setCardAnimation("");
@@ -80,6 +94,12 @@ export default function Home(props) {
     }
   }
 
+  const handleOpenModal = values => {
+    setSurvivor(values);
+
+    return setModal(true);
+  };
+
   const options = {
     selectableRows: "none",
     filterType: "checkbox",
@@ -96,7 +116,7 @@ export default function Home(props) {
               variant="contained"
               color="info"
               style={{ marginLeft: 16, height: 32 }}
-              onClick={() => {}}
+              onClick={() => handleOpenModal(rowData)}
             >
               View
             </Button>
@@ -175,6 +195,54 @@ export default function Home(props) {
                   </CardBody>
                 </form>
               </Card>
+              <Dialog
+                classes={{
+                  root: classes.center,
+                  paper: classes.modal,
+                }}
+                open={modal}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => setModal(false)}
+                aria-labelledby="classic-modal-slide-title"
+                aria-describedby="classic-modal-slide-description"
+              >
+                <DialogTitle
+                  id="classic-modal-slide-title"
+                  disableTypography
+                  className={classes.modalHeader}
+                >
+                  <IconButton
+                    className={classes.modalCloseButton}
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={() => setModal(false)}
+                  >
+                    <Close className={classes.modalClose} />
+                  </IconButton>
+                  <h2 className={classes.modalTitle}>{survivor[1]}</h2>
+                </DialogTitle>
+                <DialogContent
+                  id="classic-modal-slide-description"
+                  className={classes.modalBody}
+                >
+                  <h3>All survivor data</h3>
+                  <br />
+                  <p><strong>E-mail:</strong> {survivor[2]}</p>
+                  <p><strong>Birth Date:</strong> {survivor[3]}</p>
+                  <p><strong>Status:</strong> {survivor[4]}</p>
+                </DialogContent>
+                <DialogActions className={classes.modalFooter}>
+                  <Button
+                    onClick={() => setModal(false)}
+                    color="danger"
+                    simple
+                  >
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </GridItem>
           </GridContainer>
         </div>

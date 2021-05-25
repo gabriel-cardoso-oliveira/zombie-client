@@ -18,7 +18,7 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 
-import styles from "assets/jss/material-kit-react/views/loginPage.js";
+import styles from "assets/jss/material-kit-react/views/onePage.js";
 
 import image from "assets/img/bg-zombie.png";
 import { columns } from "utils/columns.js";
@@ -30,6 +30,7 @@ const useStyles = makeStyles(styles);
 export default function Home(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   const [survivors, setSurvivors] = useState([]);
+  const [alertSuccess, setAlertSuccess] = useState(false);
 
   setTimeout(() => {
     setCardAnimation("");
@@ -38,6 +39,46 @@ export default function Home(props) {
   const classes = useStyles();
 
   const { ...rest } = props;
+
+  async function getSurvivors() {
+    try {
+      const { data } = await api.get("survivors");
+
+      const survivorsTmp = data.map(survivo => {
+        survivo.is_infected = survivo.is_infected ? "Infected" : "Not Infected";
+
+        return survivo;
+      });
+
+      return setSurvivors(survivorsTmp);
+    } catch (error) {
+      toast.error("Could not connect to the server.");
+    }
+  }
+
+  useEffect(() => {
+    getSurvivors();
+  }, []);
+
+  const updateSurvivor = async survivor => {
+    try {
+      const values = {
+        survivorId: Number(survivor[0]),
+        name: survivor[1],
+        email: survivor[2],
+        birth_date: survivor[3],
+        is_infected: survivor[4] === "Infected" ? false : true,
+      };
+
+      await api.put("survivors", values);
+
+      getSurvivors();
+
+      return toast.success("Survivor successfully changed");
+    } catch (error) {
+      toast.error("Could not connect to the server.");
+    }
+  }
 
   const options = {
     selectableRows: "none",
@@ -63,7 +104,7 @@ export default function Home(props) {
               variant="contained"
               color="warning"
               style={{ marginLeft: 16, height: 32 }}
-              onClick={() => {}}
+              onClick={() => updateSurvivor(rowData)}
             >
               {rowData[4] === "Infected" ? "Not Infected" : "Infected"}
             </Button>
@@ -92,26 +133,6 @@ export default function Home(props) {
       return (<ExpandButton {...props} />);
     },
   };
-
-  async function getSurvivors() {
-    try {
-      const { data } = await api.get("survivors");
-
-      const survivorsTmp = data.map(survivo => {
-        survivo.is_infected = survivo.is_infected ? "Infected" : "Not Infected";
-
-        return survivo;
-      });
-
-      setSurvivors(survivorsTmp);
-    } catch (error) {
-      toast.error("Could not connect to the server.");
-    }
-  }
-
-  useEffect(() => {
-    getSurvivors();
-  }, []);
 
   return (
     <div>

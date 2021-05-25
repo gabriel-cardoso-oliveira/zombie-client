@@ -13,7 +13,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Slide from "@material-ui/core/Slide";
 import Close from "@material-ui/icons/Close";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 // core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
@@ -88,7 +89,9 @@ export default function Home(props) {
 
       getSurvivors();
 
-      return toast.success("Survivor successfully changed");
+      return toast.success("Survivor successfully changed", {
+        position: toast.POSITION.TOP_CENTER
+      });
     } catch (error) {
       toast.error("Could not connect to the server.");
     }
@@ -246,6 +249,7 @@ export default function Home(props) {
             </GridItem>
           </GridContainer>
         </div>
+        <ToastContainer />
         <Footer whiteFont />
       </div>
     </div>

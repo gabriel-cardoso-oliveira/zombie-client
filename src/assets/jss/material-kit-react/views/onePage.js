@@ -1,4 +1,4 @@
-import { container } from "assets/jss/material-kit-react.js";
+import { container, primaryColor } from "assets/jss/material-kit-react.js";
 import modalStyle from "assets/jss/material-kit-react/modalStyle.js";
 
 const signupPageStyle = {
@@ -87,6 +87,40 @@ const signupPageStyle = {
   },
   inputIconsColor: {
     color: "#495057",
+  },
+  switchBase: {
+    color: primaryColor + "!important",
+  },
+  switchIcon: {
+    boxShadow: "0 1px 3px 1px rgba(0, 0, 0, 0.4)",
+    color: "#FFFFFF !important",
+    border: "1px solid rgba(0, 0, 0, .54)",
+  },
+  switchBar: {
+    width: "30px",
+    height: "15px",
+    backgroundColor: "rgb(80, 80, 80)",
+    borderRadius: "15px",
+    opacity: "0.7!important",
+  },
+  switchChecked: {
+    "& + $switchBar": {
+      backgroundColor: "rgba(156, 39, 176, 1) !important",
+    },
+    "& $switchIcon": {
+      borderColor: "#9c27b0",
+    },
+  },
+  label: {
+    cursor: "pointer",
+    paddingLeft: "0",
+    color: "rgba(0, 0, 0, 0.50)",
+    fontSize: "14px",
+    lineHeight: "1.428571429",
+    fontWeight: "400",
+    display: "inline-flex",
+    transition: "0.3s ease all",
+    letterSpacing: "unset",
   },
 };
 

@@ -32,6 +32,7 @@ import image from "assets/img/bg-zombie.png";
 import { columns } from "utils/columns.js";
 // API RESTful
 import api from "services/api.js";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -46,6 +47,8 @@ export default function Home(props) {
   const [survivors, setSurvivors] = useState([]);
   const [survivor, setSurvivor] = useState([]);
   const [modal, setModal] = useState(false);
+
+  const history = useHistory();
 
   setTimeout(() => {
     setCardAnimation("");
@@ -157,6 +160,10 @@ export default function Home(props) {
     },
   };
 
+  const addSurvivor = () => {
+    return history.push("/add");
+  };
+
   return (
     <div>
       <Header
@@ -186,6 +193,16 @@ export default function Home(props) {
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h3>Survivors</h3>
                   </CardHeader>
+                  {/* <GridContainer justify="center">
+                    <Button
+                      onClick={addSurvivor}
+                      simple
+                      color="primary"
+                      size="lg"
+                    >
+                      ADD SURVIVOR
+                    </Button>
+                  </GridContainer> */}
                   <CardBody>
                     <MuiThemeProvider theme={theme}>
                       <MUIDataTable

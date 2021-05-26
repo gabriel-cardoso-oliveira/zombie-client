@@ -1,18 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import history from "services/history.js";
 
 import "assets/scss/material-kit-react.scss?v=1.10.0";
 
 import Home from "views/Home/Home.js";
-
-var hist = createBrowserHistory();
+import AddSurvivor from "views/Home/AddSurvivor.js";
 
 ReactDOM.render(
-  <Router history={hist}>
+  <Router history={history}>
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" exact component={Home} />
+      <Route path="/add" component={AddSurvivor} />
     </Switch>
   </Router>,
   document.getElementById("root")

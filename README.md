@@ -2,6 +2,8 @@
 
 ### React for zombie
 
+## <a href="https://react-for-zombie.netlify.app">DEMO</a>
+
 Back-End:<br />
 https://github.com/gabriel-cardoso-oliveira/zombie-server<br />
 
@@ -24,3 +26,7 @@ Test:
 ```
 yarn run start
 ```
+
+<p align="center">
+  <img src="./src/assets/img/home.png" />
+</p>

@@ -152,10 +152,6 @@ export default function Home(props) {
 
   const components = {
     ExpandButton: (props) => {
-      if (props.dataIndex === 3 || props.dataIndex === 4) {
-        return <div style={{ width: "24px" }} />;
-      }
-
       return (<ExpandButton {...props} />);
     },
   };
@@ -193,16 +189,16 @@ export default function Home(props) {
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h3>Survivors</h3>
                   </CardHeader>
-                  {/* <GridContainer justify="center">
-                    <Button
+                  <GridContainer justify="center">
+                    {/* <Button
                       onClick={addSurvivor}
                       simple
                       color="primary"
                       size="lg"
                     >
                       ADD SURVIVOR
-                    </Button>
-                  </GridContainer> */}
+                    </Button> */}
+                  </GridContainer>
                   <CardBody>
                     <MuiThemeProvider theme={theme}>
                       <MUIDataTable

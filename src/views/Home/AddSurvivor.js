@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -39,6 +39,8 @@ export default function LoginPage(props) {
   const [birthDate, setBirthDate] = useState();
   const [isInfected, setIsInfected] = useState(false);
 
+  const nameRef = useRef();
+
   const history = useHistory();
 
   setTimeout(function () {
@@ -78,6 +80,12 @@ export default function LoginPage(props) {
       return toast.error("Check the data and try again!");
     }
   }
+
+  // const addTest = (e) => {
+  //   console.log("change", name);
+  //   return setName(e.target.value);
+  // };
+
   return (
     <div>
       <Header
@@ -111,11 +119,12 @@ export default function LoginPage(props) {
                     <CustomInput
                       labelText="Full Name..."
                       id="full"
+                      ref={nameRef}
                       formControlProps={{
                         fullWidth: true,
                       }}
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChangeText={setName}
                       inputProps={{
                         type: "text",
                         endAdornment: (
